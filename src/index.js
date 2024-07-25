@@ -1,7 +1,8 @@
 import { DOMManipulation, TodoLogic } from './DomMan'
 import Storage from './Storage';
+import './style.css'
 
-// Sample data
+
 const sampleData = {
   "projects": [
     {

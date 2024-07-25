@@ -1,6 +1,7 @@
 import Todo from './ToDoList';
 import Project from "./Project";
 import Storage from './Storage';
+import './style.css'
 
 const TodoLogic = (() => {
     let projects = [new Project('Default')];
@@ -154,7 +155,7 @@ const DOMManipulation = (() => {
         formDiv.innerHTML = '';
       });
     }
-  
+
     return {
       renderProjects,
       renderTodos,
