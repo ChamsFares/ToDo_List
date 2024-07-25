@@ -1,12 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'development',
     entry: {
         index: './src/index.js',
         project: './src/Project.js',
-        dom: './src/DomMan.js',
         ToDoList: './src/ToDoList.js',
         storage: './src/Storage.js',
     },
@@ -14,6 +14,9 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/index.html',
             title:  'ToDo List',
+        }),
+        new MiniCssExtractPlugin({
+          filename: './src/style.css',
         }),
     ],
     output: {

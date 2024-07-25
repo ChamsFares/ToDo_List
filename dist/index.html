@@ -1,38 +1,24 @@
-<!DOCTYPE>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-<script defer src="./index.bundle.js"></script><script defer src="./project.bundle.js"></script><script defer src="./dom.bundle.js"></script><script defer src="./ToDoList.bundle.js"></script><script defer src="./storage.bundle.js"></script></head>
+    <title>Todo List</title>
+<script defer src="./index.bundle.js"></script><script defer src="./project.bundle.js"></script><script defer src="./ToDoList.bundle.js"></script><script defer src="./storage.bundle.js"></script></head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Todo App</h1>
-        </header>
-        <main>
-            <div class="projects-section">
-                <h2>Projects</h2>
-                <ul id="project-list"></ul>
-                <button id="new-project-btn">New Project</button>
-            </div>
-            <div class="todos-section">
-                <h2>Todos</h2>
-                <ul id="todo-list"></ul>
-                <button id="new-todo-btn">New Todo</button>
-            </div>
-        </main>
-        <div id="todo-details" class=" hidden">
-        </div>
-        <div id="new-todo-form" class="modal hidden">
-        </div>
-        <div id="new-project-form" class="modal hidden">
-            <form id="project-form">
-                <input type="text" id="project-name" placeholder="Project Name" required>
-                <button type="submit">Add Project</button>
-            </form>
-        </div>
+    <h1>Todo List</h1>
+    <div id="projects">
+        <h2>Projects</h2>
+        <ul id="project-list"></ul>
+        <button onclick="DOMManipulation.showNewProjectForm()">New Project</button>
+        <div id="new-project-form"></div>
     </div>
+    <div id="todos">
+        <h2>Todos</h2>
+        <ul id="todo-list"></ul>
+        <div id="new-todo-form"></div>
+    </div>
+    <div id="todo-details"></div>
     <script src="index.bundle.js"></script>
 </body>
 </html>
