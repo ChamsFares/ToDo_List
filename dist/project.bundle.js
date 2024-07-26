@@ -16,7 +16,7 @@
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Project)\n/* harmony export */ });\nclass Project {\r\n    constructor(name) {\r\n      this.name = name;\r\n      this.todos = [];\r\n    }\r\n  \r\n    addTodo(todo) {\r\n      this.todos.push(todo);\r\n    }\r\n  \r\n    removeTodo(todo) {\r\n      const index = this.todos.indexOf(todo);\r\n      if (index > -1) {\r\n        this.todos.splice(index, 1);\r\n      }\r\n    }\r\n  }\n\n//# sourceURL=webpack://todo_list/./src/Project.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Project)\n/* harmony export */ });\nclass Project {\r\n    constructor(name) {\r\n      this.name = name;\r\n      this.todos = [];\r\n    }\r\n  \r\n    addTodo(todo) {\r\n      this.todos.push(todo);\r\n    }\r\n  \r\n    removeTodo(todoId) {\r\n      console.log('Removing todo with ID:', todoId);\r\n      this.todos = this.todos.filter(todo => todo.id !== todoId);\r\n      console.log('Todos after removal:', this.todos);\r\n    }\r\n  }\n\n//# sourceURL=webpack://todo_list/./src/Project.js?");
 
 /***/ })
 

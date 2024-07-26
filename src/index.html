@@ -7,18 +7,20 @@
 </head>
 <body>
     <h1>Todo List</h1>
-    <div id="projects">
-        <h2>Projects</h2>
-        <ul id="project-list"></ul>
-        <button onclick="DOMManipulation.showNewProjectForm()">New Project</button>
-        <div id="new-project-form"></div>
+    <div class="container">
+        <div id="projects">
+            <h2>Projects</h2>
+            <div id="project-list"></div>
+            <div id="new-project-form"></div>
+            <div id="project-details"></div>
+        </div>
+        <div id="todos">
+            <h2>Todos</h2>
+            <ul id="todo-list"></ul>
+            <div id="new-todo-form"></div>
+            <div id="todo-details"></div>
+        </div>
     </div>
-    <div id="todos">
-        <h2>Todos</h2>
-        <ul id="todo-list"></ul>
-        <div id="new-todo-form"></div>
-    </div>
-    <div id="todo-details"></div>
     <script src="index.bundle.js"></script>
 </body>
 </html>

@@ -4,21 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
-<script defer src="./index.bundle.js"></script><script defer src="./project.bundle.js"></script><script defer src="./ToDoList.bundle.js"></script><script defer src="./storage.bundle.js"></script></head>
+    <link rel="stylesheet" href="styles.css">
+<script defer src="./index.bundle.js"></script><script defer src="./project.bundle.js"></script><script defer src="./ToDoList.bundle.js"></script><script defer src="./storage.bundle.js"></script><link href="./src/style.css" rel="stylesheet"></head>
 <body>
     <h1>Todo List</h1>
-    <div id="projects">
-        <h2>Projects</h2>
-        <ul id="project-list"></ul>
-        <button onclick="DOMManipulation.showNewProjectForm()">New Project</button>
-        <div id="new-project-form"></div>
+    <div class="container">
+        <div id="projects">
+            <h2>Projects</h2>
+            <div id="project-list"></div>
+            <div id="new-project-form"></div>
+            <div id="project-details"></div>
+        </div>
+        <div id="todos">
+            <h2>Todos</h2>
+            <ul id="todo-list"></ul>
+            <div id="new-todo-form"></div>
+            <div id="todo-details"></div>
+        </div>
     </div>
-    <div id="todos">
-        <h2>Todos</h2>
-        <ul id="todo-list"></ul>
-        <div id="new-todo-form"></div>
-    </div>
-    <div id="todo-details"></div>
     <script src="index.bundle.js"></script>
 </body>
 </html>

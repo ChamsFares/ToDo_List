@@ -1,10 +1,13 @@
+/*!*****************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/style.css ***!
+  \*****************************************************************/
 :root {
     --header-height: 60px;
     --projects-width: 250px;
-    --primary-color: #CEA07E;
-    --secondary-color: #DEBD91;
+    --primary-color: #ffc444;
+    --secondary-color: #8cd6c0;
     --text-color: #000000;
-    --background-color: #EDD9A3;
+    --background-color: #fff;
     --border-color: #ddd;
   }
   
@@ -26,7 +29,7 @@
   
   h1 {
     background-color: var(--primary-color);
-    color: var(--border-color);
+    color: var(--background-color);
     text-align: center;
     padding: 1rem;
     height: var(--header-height);

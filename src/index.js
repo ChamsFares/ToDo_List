@@ -6,15 +6,15 @@ import './style.css'
 const TodoLogic = (() => {
     let projects = [new Project('Default')];
   
-    function createTodo(title, description, dueDate, priority, projectName = 'Default') {
-      const todo = new Todo(title, description, dueDate, priority);
-      const project = projects.find(p => p.name === projectName);
-      if (project) {
-        project.addTodo(todo);
-        Storage.setData({ projects});
+    function createTodo(title, description, dueDate = Date.now(), priority, projectName = 'Default') {
+        const todo = new Todo(title, description, dueDate, priority);
+        const project = projects.find(p => p.name === projectName);
+        if (project) {
+          project.addTodo(todo);
+          Storage.setData({ projects });
+        }
+        return todo;
       }
-      return todo;
-    }
   
     function createProject(name) {
       const project = new Project(name);
@@ -23,14 +23,24 @@ const TodoLogic = (() => {
     }
   
     function deleteTodo(todoId, projectName) {
-      const project = projects.find(p => p.name === projectName);
-      if (project) {
-        project.removeTodo(todoId);
+        const project = projects.find(p => p.name === projectName);
+        if (project) {
+          project.removeTodo(todoId);
+          Storage.setData({ projects });
+        }
       }
-    }
   
+    function updateProject(oldName, newName) {
+        const project = projects.find(p => p.name === oldName);
+        if (project) {
+            project.name = newName;
+            Storage.setData({ projects });
+        }
+    }
+
     function deleteProject(projectName) {
-      projects = projects.filter(p => p.name !== projectName);
+        projects = projects.filter(p => p.name !== projectName);
+        Storage.setData({ projects });
     }
   
     function getTodosByProject(projectName) {
@@ -73,6 +83,7 @@ const TodoLogic = (() => {
       createProject,
       deleteTodo,
       deleteProject,
+      updateProject,
       getTodosByProject,
       getAllProjects,
       updateTodo,
@@ -88,9 +99,17 @@ const TodoLogic = (() => {
         TodoLogic.getAllProjects().forEach(project => {
             const li = document.createElement('li');
             li.textContent = project.name;
-            li.addEventListener('click', () => renderTodos(project.name));
+            li.addEventListener('click', () => {
+                showProjectDetails(project.name);
+                renderTodos(project.name);
+            });
             projectList.appendChild(li);
         });
+        
+        const addProjectBtn = document.createElement('button');
+        addProjectBtn.textContent = 'Add New Project';
+        addProjectBtn.addEventListener('click', showNewProjectForm);
+        projectList.appendChild(addProjectBtn);
     }
 
     function renderTodos(projectName) {
@@ -102,8 +121,6 @@ const TodoLogic = (() => {
             li.addEventListener('click', () => showTodoDetails(todo, projectName));
             todoList.appendChild(li);
         });
-        
-        // Add button to show new todo form
         const addTodoBtn = document.createElement('button');
         addTodoBtn.textContent = 'Add New Todo';
         addTodoBtn.addEventListener('click', () => showNewTodoForm(projectName));
@@ -113,16 +130,18 @@ const TodoLogic = (() => {
     function showTodoDetails(todo, projectName) {
         const detailsDiv = document.getElementById('todo-details');
         detailsDiv.innerHTML = `
-            <h3>${todo.title}</h3>
-            <p>Description: ${todo.description}</p>
-            <p>Due Date: ${todo.dueDate}</p>
-            <p>Priority: ${todo.priority}</p>
-            <button id="edit-todo-btn">Edit</button>
-            <button id="delete-todo-btn">Delete</button>
+          <h3>${todo.title}</h3>
+          <p>Description: ${todo.description}</p>
+          <p>Due Date: ${todo.dueDate}</p>
+          <p>Priority: ${todo.priority}</p>
+          <button id="edit-todo-btn">Edit</button>
+          <button id="delete-todo-btn">Delete</button>
         `;
         document.getElementById('edit-todo-btn').addEventListener('click', () => editTodo(todo.id, projectName));
-        document.getElementById('delete-todo-btn').addEventListener('click', () => deleteTodo(todo.id, projectName));
-    }
+        document.getElementById('delete-todo-btn').addEventListener('click', () => {
+          deleteTodo(todo.id, projectName);
+        });
+      }
 
     function editTodo(todoId, projectName) {
         const todo = TodoLogic.getTodosByProject(projectName).find(t => t.id === todoId);
@@ -160,7 +179,7 @@ const TodoLogic = (() => {
         TodoLogic.deleteTodo(todoId, projectName);
         renderTodos(projectName);
         document.getElementById('todo-details').innerHTML = '';
-    }
+      }
 
     function showNewTodoForm(projectName) {
         const formDiv = document.getElementById('new-todo-form');
@@ -205,6 +224,61 @@ const TodoLogic = (() => {
             formDiv.innerHTML = '';
         });
     }
+    function showProjectDetails(projectName) {
+        const project = TodoLogic.getAllProjects().find(p => p.name === projectName);
+        if (!project) {
+            console.error('Project not found:', projectName);
+            return;
+        }
+    
+        const detailsDiv = document.getElementById('project-details');
+        detailsDiv.innerHTML = `
+            <h2>${project.name}</h2>
+            <p>Total Todos: ${project.todos.length}</p>
+            <button id="edit-project-btn">Edit Project</button>
+            <button id="delete-project-btn">Delete Project</button>
+        `;
+    
+        document.getElementById('edit-project-btn').addEventListener('click', () => editProject(projectName));
+        document.getElementById('delete-project-btn').addEventListener('click', () => deleteProject(projectName));
+    }
+    
+    function editProject(projectName) {
+        const project = TodoLogic.getAllProjects().find(p => p.name === projectName);
+        if (!project) {
+            console.error('Project not found:', projectName);
+            return;
+        }
+    
+        const detailsDiv = document.getElementById('project-details');
+        detailsDiv.innerHTML = `
+            <form id="edit-project-form">
+                <input type="text" id="edit-project-name" value="${project.name}" required>
+                <button type="submit">Update Project</button>
+            </form>
+        `;
+    
+        document.getElementById('edit-project-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newName = document.getElementById('edit-project-name').value;
+            TodoLogic.updateProject(projectName, newName);
+            renderProjects();
+            showProjectDetails(newName);
+        });
+    }
+    
+    function deleteProject(projectName) {
+        if (confirm(`Are you sure you want to delete the project "${projectName}"?`)) {
+            TodoLogic.deleteProject(projectName);
+            renderProjects();
+            const firstProject = TodoLogic.getAllProjects()[0];
+            if (firstProject) {
+                showProjectDetails(firstProject.name);
+            } else {
+                document.getElementById('project-details').innerHTML = '';
+            }
+        }
+    }
 
     return {
         renderProjects,
@@ -213,92 +287,21 @@ const TodoLogic = (() => {
         editTodo,
         deleteTodo,
         showNewTodoForm,
-        showNewProjectForm
+        showNewProjectForm,
+        showProjectDetails,
+        deleteProject,
+        editProject
     };
 })();
 
-const sampleData = {
-  "projects": [
-    {
-      "name": "Work",
-      "todos": [
-        {
-          "id": "work1",
-          "title": "Complete project proposal",
-          "description": "Draft and finalize the Q3 project proposal",
-          "dueDate": "2023-08-15",
-          "priority": "high",
-          "completed": false
-        },
-        {
-          "id": "work2",
-          "title": "Schedule team meeting",
-          "description": "Set up a team sync for next week",
-          "dueDate": "2023-07-30",
-          "priority": "medium",
-          "completed": false
-        }
-      ]
-    },
-    {
-      "name": "Personal",
-      "todos": [
-        {
-          "id": "personal1",
-          "title": "Gym session",
-          "description": "30 minutes cardio, 30 minutes strength training",
-          "dueDate": "2023-07-28",
-          "priority": "medium",
-          "completed": false
-        },
-        {
-          "id": "personal2",
-          "title": "Buy groceries",
-          "description": "Milk, eggs, bread, fruits",
-          "dueDate": "2023-07-29",
-          "priority": "low",
-          "completed": false
-        }
-      ]
-    },
-    {
-      "name": "Learning",
-      "todos": [
-        {
-          "id": "learn1",
-          "title": "Complete JavaScript course",
-          "description": "Finish the advanced JavaScript module",
-          "dueDate": "2023-08-30",
-          "priority": "high",
-          "completed": false
-        },
-        {
-          "id": "learn2",
-          "title": "Start React project",
-          "description": "Begin building a small React application",
-          "dueDate": "2023-09-15",
-          "priority": "medium",
-          "completed": false
-        }
-      ]
-    }
-  ]
-};
-
-window.DOMManipulation = DOMManipulation;
-
 function initializeApp() {
-    const savedData = Storage.loadData();
-    if (savedData) {
-      TodoLogic.setData(savedData);
-    } else {
-      TodoLogic.setData(sampleData);
-      Storage.saveData(sampleData);
-    }
+    const savedData = Storage.getData();
+    TodoLogic.setData(savedData);
     DOMManipulation.renderProjects();
-    DOMManipulation.renderTodos('Work'); 
+    const firstProject = TodoLogic.getAllProjects()[0];
+    if (firstProject) {
+        DOMManipulation.renderTodos(firstProject.name);
+    }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    initializeApp();
-});
+document.addEventListener('DOMContentLoaded', initializeApp);

@@ -1,15 +1,12 @@
-// Storage.js
-const Storage = (() => {
-  function saveData(data) {
-    localStorage.setItem('todoAppData', JSON.stringify(data));
-  }
-
-  function loadData() {
-    const data = localStorage.getItem('todoAppData');
+const Storage = {
+  setData(data) {
+    localStorage.setItem('todoData', JSON.stringify(data));
+  },
+  
+  getData() {
+    const data = localStorage.getItem('todoData');
     return data ? JSON.parse(data) : null;
   }
-
-  return { saveData, loadData };
-})();
+};
 
 export default Storage;

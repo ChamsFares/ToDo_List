@@ -16,7 +16,7 @@
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n// Storage.js\r\nconst Storage = (() => {\r\n  function saveData(data) {\r\n    localStorage.setItem('todoAppData', JSON.stringify(data));\r\n  }\r\n\r\n  function loadData() {\r\n    const data = localStorage.getItem('todoAppData');\r\n    return data ? JSON.parse(data) : null;\r\n  }\r\n\r\n  return { saveData, loadData };\r\n})();\r\n\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Storage);\n\n//# sourceURL=webpack://todo_list/./src/Storage.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst Storage = {\r\n  setData(data) {\r\n    localStorage.setItem('todoData', JSON.stringify(data));\r\n  },\r\n  \r\n  getData() {\r\n    const data = localStorage.getItem('todoData');\r\n    return data ? JSON.parse(data) : null;\r\n  }\r\n};\r\n\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Storage);\n\n//# sourceURL=webpack://todo_list/./src/Storage.js?");
 
 /***/ })
 

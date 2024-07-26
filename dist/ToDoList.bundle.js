@@ -16,7 +16,7 @@
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ todo)\n/* harmony export */ });\nclass todo {\r\n    constructor(id, title, description, dueDate, priority, notes = [], checklist = []) {\r\n      this.id = id;\r\n      this.title = title;\r\n      this.description = description;\r\n      this.dueDate = dueDate;\r\n      this.priority = priority;\r\n      this.notes = notes;\r\n      this.checklist = checklist;\r\n      this.completed = false;\r\n    }\r\n  \r\n    toggleComplete() {\r\n      this.completed = !this.completed;\r\n    }\r\n  \r\n}\r\n\r\n\n\n//# sourceURL=webpack://todo_list/./src/ToDoList.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ todo)\n/* harmony export */ });\nclass todo {\r\n  constructor(title, description, dueDate, priority) {\r\n    this.id = Date.now().toString();\r\n    this.title = title;\r\n    this.description = description;\r\n    this.dueDate = dueDate;\r\n    this.priority = priority;\r\n  }\r\n  \r\n    toggleComplete() {\r\n      this.completed = !this.completed;\r\n    }\r\n  \r\n}\r\n\r\n\n\n//# sourceURL=webpack://todo_list/./src/ToDoList.js?");
 
 /***/ })
 

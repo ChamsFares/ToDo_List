@@ -8,10 +8,7 @@ export default class Project {
       this.todos.push(todo);
     }
   
-    removeTodo(todo) {
-      const index = this.todos.indexOf(todo);
-      if (index > -1) {
-        this.todos.splice(index, 1);
-      }
+    removeTodo(todoId) {
+      this.todos = this.todos.filter(todo => todo.id !== todoId);
     }
   }
